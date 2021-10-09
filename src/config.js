@@ -5,14 +5,14 @@ const baseUri = "https://straight-line.org/thekingscreations/b2/c1";
 const layersOrder = [
   { name: "Backgrounds" },
   { name: "Flat Scribbles" },
-  // { name: "Round Scribbles" },
-  // { name: "Slash Scribbles" },
+  { name: "Round Scribbles" },
+  { name: "Slash Scribbles" },
   { name: "Masterpiece Arts" },
 ];
 
 const format = {
-  width: 747,
-  height: 747,
+  width: 2474,
+  height: 2474,
 };
 
 const background = {
@@ -20,9 +20,9 @@ const background = {
   brightness: "20%",
 };
 
-const uniqueDnaTorrance = 10000;
+const uniqueDnaTorrance = 12000;
 
-const editionSize = 47;
+const editionSize = 17;
 
 module.exports = {
   layersOrder,
