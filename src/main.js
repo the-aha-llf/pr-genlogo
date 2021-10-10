@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const sha1 = require("sha1");
 const { createCanvas, loadImage } = require("canvas");
 const isLocal = typeof process.pkg === "undefined";
 const basePath = isLocal ? process.cwd() : path.dirname(process.execPath);
@@ -7,13 +8,13 @@ const buildDir = `${basePath}/build`;
 const nftName = `ALLHAILNFT.B2C1`;
 const layersDir = `${basePath}/layers`;
 const {
-  layersOrder,
   format,
   baseUri,
   description,
   background,
   uniqueDnaTorrance,
-  editionSize,
+  layerConfigurations,
+  rarityDelimiter,
 } = require(path.join(basePath, "/src/config.js"));
 const console = require("console");
 const canvas = createCanvas(format.width, format.height);
@@ -31,16 +32,23 @@ const buildSetup = () => {
 
 const getRarityWeight = (_str) => {
   let nameWithoutExtension = _str.slice(0, -4);
-  var nameWithoutWeight = Number(nameWithoutExtension.split(/[* ]+/).pop());
+  var nameWithoutWeight = Number(
+    nameWithoutExtension.split(rarityDelimiter).pop()
+  );
   if (isNaN(nameWithoutWeight)) {
     nameWithoutWeight = 0;
   }
   return nameWithoutWeight;
 };
 
+const cleanDna = (_str) => {
+  var dna = Number(_str.split(":").shift());
+  return dna;
+};
+
 const cleanName = (_str) => {
   let nameWithoutExtension = _str.slice(0, -4);
-  var nameWithoutWeight = nameWithoutExtension.split(/[* ]+/).shift();
+  var nameWithoutWeight = nameWithoutExtension.split(rarityDelimiter).shift();
   return nameWithoutWeight;
 };
 
@@ -52,6 +60,7 @@ const getElements = (path) => {
       return {
         id: index,
         name: cleanName(i),
+        filename: i,
         path: `${path}${i}`,
         weight: getRarityWeight(i),
       };
@@ -88,7 +97,7 @@ const drawBackground = () => {
 const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
   let tempMetadata = {
-    dna: _dna.join(""),
+    dna: sha1(_dna.join("")),
     name: `${nftName} #${_edition}`,
     description: description,
     campaign: "10290 NFTs to crawling the decentralized network. 1470 NFTs to build The King's Office. 210 NFTs to make Sanctuary of The King's World. 30 NFTs to developing and setting The King's Story. In this Universe #3 where The King rules his World. One King that rules them all. One King creates them. One King that mint them all. And in the decentralized world, The King will be live afterlife forever.",
@@ -124,7 +133,9 @@ const drawElement = (_element) => {
 
 const constructLayerToDna = (_dna = [], _layers = []) => {
   let mappedDnaToLayers = _layers.map((layer, index) => {
-    let selectedElement = layer.elements[_dna[index]];
+    let selectedElement = layer.elements.find(
+      (e) => e.id == cleanDna(_dna[index])
+    );
     return {
       name: layer.name,
       selectedElement: selectedElement,
@@ -156,7 +167,9 @@ const createDna = (_layers) => {
       // console.log("=======Hasilnya=============> ", random);
       if (random < 0) {
         console.log("=======Variant Terpilih=====> ", layer.elements[i].id);
-        return randNum.push(layer.elements[i].id);
+        return randNum.push(
+          `${layer.elements[i].id}:${layer.elements[i].filename}`
+        );
       }
     }
   });
@@ -175,45 +188,56 @@ const saveMetaDataSingleFile = (_editionCount) => {
 };
 
 const startCreating = async () => {
+  let layerConfigIndex = 0;
   let editionCount = 1;
   let failedCount = 0;
-  const layers = layersSetup(layersOrder);
-  while (editionCount <= editionSize) {
-    let newDna = createDna(layers);
-    if (isDnaUnique(dnaList, newDna)) {
-      let results = constructLayerToDna(newDna, layers);
-      let loadedElements = [];
+  while (layerConfigIndex < layerConfigurations.length) {
+    const layers = layersSetup(
+      layerConfigurations[layerConfigIndex].layersOrder
+    );
+    while (
+      editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
+    ) {
+      let newDna = createDna(layers);
+      if (isDnaUnique(dnaList, newDna)) {
+        let results = constructLayerToDna(newDna, layers);
+        let loadedElements = [];
 
-      results.forEach((layer) => {
-        loadedElements.push(loadLayerImg(layer));
-      });
-
-      await Promise.all(loadedElements).then((elementArray) => {
-        ctx.clearRect(0, 0, format.width, format.height);
-        if (background.generate) {
-          drawBackground();
-        }
-        elementArray.forEach((element) => {
-          drawElement(element);
+        results.forEach((layer) => {
+          loadedElements.push(loadLayerImg(layer));
         });
-        saveImage(editionCount);
-        addMetadata(newDna, editionCount);
-        saveMetaDataSingleFile(editionCount);
-        console.log(`Created edition: ${editionCount}, with DNA: ${newDna}`);
-      });
 
-      dnaList.push(newDna);
-      editionCount++;
-    } else {
-      console.log("DNA exists!");
-      failedCount++;
-      if (failedCount >= uniqueDnaTorrance) {
-        console.log(
-          `You need more layers or elements to generate ${editionSize} artworks!`
-        );
-        process.exit();
+        await Promise.all(loadedElements).then((elementArray) => {
+          ctx.clearRect(0, 0, format.width, format.height);
+          if (background.generate) {
+            drawBackground();
+          }
+          elementArray.forEach((element) => {
+            drawElement(element);
+          });
+          saveImage(editionCount);
+          addMetadata(newDna, editionCount);
+          saveMetaDataSingleFile(editionCount);
+          console.log(
+            `Created edition: ${editionCount}, with DNA: ${sha1(
+              newDna.join("")
+            )}`
+          );
+        });
+        dnaList.push(newDna);
+        editionCount++;
+      } else {
+        console.log("DNA exists!");
+        failedCount++;
+        if (failedCount >= uniqueDnaTorrance) {
+          console.log(
+            `You need more layers or elements to grow your edition to ${layerConfigurations[layerConfigIndex].growEditionSizeTo} artworks!`
+          );
+          process.exit();
+        }
       }
     }
+    layerConfigIndex++;
   }
   writeMetaData(JSON.stringify(metadataList));
 };
