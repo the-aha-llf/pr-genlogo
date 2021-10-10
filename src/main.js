@@ -4,6 +4,7 @@ const { createCanvas, loadImage } = require("canvas");
 const isLocal = typeof process.pkg === "undefined";
 const basePath = isLocal ? process.cwd() : path.dirname(process.execPath);
 const buildDir = `${basePath}/build`;
+const nftName = `ALLHAILNFT.B2C1`;
 const layersDir = `${basePath}/layers`;
 const {
   layersOrder,
@@ -13,7 +14,7 @@ const {
   background,
   uniqueDnaTorrance,
   editionSize,
-} = require(`${basePath}/src/config.js`);
+} = require(path.join(basePath, "/src/config.js"));
 const console = require("console");
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
@@ -28,19 +29,31 @@ const buildSetup = () => {
   fs.mkdirSync(buildDir);
 };
 
+const getRarityWeight = (_str) => {
+  let nameWithoutExtension = _str.slice(0, -4);
+  var nameWithoutWeight = Number(nameWithoutExtension.split(/[* ]+/).pop());
+  if (isNaN(nameWithoutWeight)) {
+    nameWithoutWeight = 0;
+  }
+  return nameWithoutWeight;
+};
+
 const cleanName = (_str) => {
-  let name = _str.slice(0, -4);
-  return name;
+  let nameWithoutExtension = _str.slice(0, -4);
+  var nameWithoutWeight = nameWithoutExtension.split(/[* ]+/).shift();
+  return nameWithoutWeight;
 };
 
 const getElements = (path) => {
   return fs
     .readdirSync(path)
     .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
-    .map((i) => {
+    .map((i, index) => {
       return {
+        id: index,
         name: cleanName(i),
         path: `${path}${i}`,
+        weight: getRarityWeight(i),
       };
     });
 };
@@ -56,7 +69,7 @@ const layersSetup = (layersOrder) => {
 
 const saveImage = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/${_editionCount}.png`,
+    `${buildDir}/${nftName}-${_editionCount}.png`,
     canvas.toBuffer("image/png")
   );
 };
@@ -76,9 +89,10 @@ const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
   let tempMetadata = {
     dna: _dna.join(""),
-    name: `#${_edition}`,
+    name: `${nftName} #${_edition}`,
     description: description,
-    image: `${baseUri}/${_edition}.png`,
+    campaign: "10290 NFTs to crawling the decentralized network. 1470 NFTs to build The King's Office. 210 NFTs to make Sanctuary of The King's World. 30 NFTs to developing and setting The King's Story. In this Universe #3 where The King rules his World. One King that rules them all. One King creates them. One King that mint them all. And in the decentralized world, The King will be live afterlife forever.",
+    image: `${baseUri}/${nftName}-${_edition}.png`,
     edition: _edition,
     date: dateTime,
     attributes: attributesList,
@@ -127,8 +141,24 @@ const isDnaUnique = (_DnaList = [], _dna = []) => {
 const createDna = (_layers) => {
   let randNum = [];
   _layers.forEach((layer) => {
-    let num = Math.floor(Math.random() * layer.elements.length);
-    randNum.push(num);
+    var totalWeight = 0;
+    layer.elements.forEach((element) => {
+      totalWeight += element.weight;
+    });
+    // console.log("=======Total Bobotnya=======> ", totalWeight);
+    // number between 0 - totalWeight
+    let random = Math.floor(Math.random() * totalWeight);
+    // console.log("=======Angka Acaknya========> ", random);
+    for (var i = 0; i < layer.elements.length; i++) {
+      // subtract the current weight from the random weight until we reach a sub zero value.
+      // console.log("=======Bobot Layer==========> ", layer.elements[i].weight);
+      random -= layer.elements[i].weight;
+      // console.log("=======Hasilnya=============> ", random);
+      if (random < 0) {
+        console.log("=======Variant Terpilih=====> ", layer.elements[i].id);
+        return randNum.push(layer.elements[i].id);
+      }
+    }
   });
   return randNum;
 };
@@ -139,7 +169,7 @@ const writeMetaData = (_data) => {
 
 const saveMetaDataSingleFile = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/${_editionCount}.json`,
+    `${buildDir}/${nftName}-${_editionCount}.json`,
     JSON.stringify(metadataList.find((meta) => meta.edition == _editionCount))
   );
 };

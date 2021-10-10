@@ -1,8 +1,19 @@
 {
   "name": "pabrik_roti_gen_logo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The code used for creating generative logos art by using the canvas api and node js. Before you use these engine, make sure you eat enough nutritious food, especially Programmed Breads.",
   "main": "index.js",
+  "bin": "index.js",
+  "pkg": {
+    "assets": [
+      "layers/**/*"
+    ],
+    "scripts": [
+      "src/main.js",
+      "src/config.js"
+    ],
+    "outputPath": "dist"
+  },
   "scripts": {
     "build": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +22,6 @@
   "license": "MIT",
   "dependencies": {
     "all": "^0.0.0",
-    "canvas": "^2.8.0",
-    "yarn": "^1.22.15"
+    "canvas": "^2.8.0"
   }
 }

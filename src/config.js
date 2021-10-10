@@ -4,6 +4,9 @@ const baseUri = "https://straight-line.org/thekingscreations/b2/c1";
 
 const layersOrder = [
   { name: "Backgrounds" },
+  // { name: "Mixed Flats" },
+  // { name: "Mixed Rounds" },
+  // { name: "Mixed Slashes" },
   { name: "Flat Scribbles" },
   { name: "Round Scribbles" },
   { name: "Slash Scribbles" },
@@ -22,7 +25,7 @@ const background = {
 
 const uniqueDnaTorrance = 12000;
 
-const editionSize = 17;
+const editionSize = 10;
 
 module.exports = {
   layersOrder,
