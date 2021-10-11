@@ -1,349 +1,34 @@
+"use strict";
+
+const path = require("path");
+const isLocal = typeof process.pkg === "undefined";
+const basePath = isLocal ? process.cwd() : path.dirname(process.execPath);
+const { MODE } = require(path.join(basePath, "src/blendMode.js"));
 const description =
   "The King's Creations! An NFT Project by ALL HAIL THE KING. B2/C1 - Second Batch/First Collection.";
 const baseUri = "https://straight-line.org/thekingscreations/b2/c1";
 
 const layerConfigurations = [
   {
-    growEditionSizeTo: 1715,
-    // growEditionSizeTo: 5,
+    // growEditionSizeTo: 12000,
+    growEditionSizeTo: 120,
     layersOrder: [
       { name: "Backgrounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      { name: "Flat Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 3430,
-    // growEditionSizeTo: 10,
-    layersOrder: [
-      { name: "Backgrounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      { name: "Flat Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 5145,
-    // growEditionSizeTo: 15,
-    layersOrder: [
-      { name: "Backgrounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      { name: "Round Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 6860,
-    // growEditionSizeTo: 20,
-    layersOrder: [
-      { name: "Backgrounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      { name: "Round Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 8575,
-    // growEditionSizeTo: 25,
-    layersOrder: [
-      { name: "Backgrounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      { name: "Slash Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 10290,
-    // growEditionSizeTo: 30,
-    layersOrder: [
-      { name: "Backgrounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      { name: "Slash Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 10535,
-    // growEditionSizeTo: 35,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      // { name: "Flat Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 10780,
-    // growEditionSizeTo: 40,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      // { name: "Flat Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11025,
-    // growEditionSizeTo: 45,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Rounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Slashes" },
-      // { name: "Round Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11270,
-    // growEditionSizeTo: 50,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Rounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Slashes" },
-      // { name: "Round Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11515,
-    // growEditionSizeTo: 55,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Slashes" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Slash Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11760,
-    // growEditionSizeTo: 60,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Slashes" },
-      // { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Slash Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11795,
-    // growEditionSizeTo: 65,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Flats" },
-      { name: "Mixed Rounds" },
-      // { name: "Mixed Slashes" },
-      // { name: "Flat Scribbles" },
-      // { name: "Round Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11830,
-    // growEditionSizeTo: 70,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Flats" },
-      { name: "Mixed Slashes" },
-      // { name: "Mixed Rounds" },
-      // { name: "Flat Scribbles" },
-      // { name: "Slash Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11865,
-    // growEditionSizeTo: 75,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Rounds" },
-      { name: "Mixed Slashes" },
-      // { name: "Mixed Flats" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11900,
-    // growEditionSizeTo: 80,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Rounds" },
-      { name: "Mixed Flats" },
-      // { name: "Mixed Slashes" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Slash Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11935,
-    // growEditionSizeTo: 85,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Slashes" },
-      { name: "Mixed Flats" },
-      // { name: "Mixed Rounds" },
-      // { name: "Flat Scribbles" },
-      // { name: "Slash Scribbles" },
-      { name: "Round Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11970,
-    // growEditionSizeTo: 90,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Slashes" },
-      { name: "Mixed Rounds" },
-      // { name: "Mixed Flats" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11975,
-    // growEditionSizeTo: 95,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Flats" },
-      { name: "Mixed Rounds" },
-      { name: "Mixed Slashes" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11980,
-    // growEditionSizeTo: 100,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Flats" },
-      { name: "Mixed Slashes" },
-      { name: "Mixed Rounds" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11985,
-    // growEditionSizeTo: 105,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Rounds" },
-      { name: "Mixed Slashes" },
-      { name: "Mixed Flats" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11990,
-    // growEditionSizeTo: 110,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Rounds" },
-      { name: "Mixed Flats" },
-      { name: "Mixed Slashes" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 11995,
-    // growEditionSizeTo: 115,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Slashes" },
-      { name: "Mixed Flats" },
-      { name: "Mixed Rounds" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
-    ],
-  },
-  {
-    growEditionSizeTo: 12000,
-    // growEditionSizeTo: 120,
-    layersOrder: [
-      { name: "Backgrounds" },
-      { name: "Mixed Slashes" },
-      { name: "Mixed Rounds" },
-      { name: "Mixed Flats" },
-      // { name: "Slash Scribbles" },
-      // { name: "Round Scribbles" },
-      // { name: "Flat Scribbles" },
-      { name: "Masterpiece Arts" },
+      { name: "Bottom" },
+      { name: "Middle" },
+      { name: "Top" },
+      { name: "Anthropophobia" },
     ],
   },
 ];
 
+const shuffleLayerConfigurations = false;
+
+const debugLogs = false;
+
 const format = {
-  width: 2474,
-  height: 2474,
+  width: 1474,
+  height: 1474,
 };
 
 const background = {
@@ -351,9 +36,20 @@ const background = {
   brightness: "20%",
 };
 
+const extraMetadata = {
+   campaign: "10290 NFTs to crawling the decentralized network. 1470 NFTs to build The King's Office. 210 NFTs to make Sanctuary of The King's World. 30 NFTs to developing and setting The King's Story. In this Universe #3 where The King rules his World. One King that rules them all. One King creates them. One King that mint them all. And in the decentralized world, The King will be live afterlife forever.",
+};
+
 const rarityDelimiter = "#";
 
-const uniqueDnaTorrance = 12000;
+const uniqueDnaTorrance = 138240;
+
+const preview = {
+  thumbPerRow: 5,
+  thumbWidth: 50,
+  imageRatio: format.width / format.height,
+  imageName: "preview.png",
+};
 
 module.exports = {
   format,
@@ -363,4 +59,8 @@ module.exports = {
   uniqueDnaTorrance,
   layerConfigurations,
   rarityDelimiter,
+  preview,
+  shuffleLayerConfigurations,
+  debugLogs,
+  extraMetadata,
 };

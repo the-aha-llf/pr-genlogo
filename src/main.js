@@ -1,12 +1,19 @@
-const fs = require("fs");
+"use strict";
+
 const path = require("path");
-const sha1 = require("sha1");
-const { createCanvas, loadImage } = require("canvas");
 const isLocal = typeof process.pkg === "undefined";
 const basePath = isLocal ? process.cwd() : path.dirname(process.execPath);
-const buildDir = `${basePath}/build`;
+const fs = require("fs");
+const sha1 = require(path.join(basePath, "/node_modules/sha1"));
+const { createCanvas, loadImage } = require(path.join(
+  basePath,
+  "/node_modules/canvas"
+));
+const buildDir = path.join(basePath, "/build");
 const nftName = `ALLHAILNFT.B2C1`;
-const layersDir = `${basePath}/layers`;
+const layersDir = path.join(basePath, "/layers");
+console.log(path.join(basePath, "/src/config.js"));
+
 const {
   format,
   baseUri,
@@ -15,8 +22,10 @@ const {
   uniqueDnaTorrance,
   layerConfigurations,
   rarityDelimiter,
+  shuffleLayerConfigurations,
+  debugLogs,
+  extraMetadata,
 } = require(path.join(basePath, "/src/config.js"));
-const console = require("console");
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
 var metadataList = [];
@@ -28,6 +37,8 @@ const buildSetup = () => {
     fs.rmdirSync(buildDir, { recursive: true });
   }
   fs.mkdirSync(buildDir);
+  fs.mkdirSync(path.join(buildDir, "/json"));
+  fs.mkdirSync(path.join(buildDir, "/images"));
 };
 
 const getRarityWeight = (_str) => {
@@ -72,13 +83,16 @@ const layersSetup = (layersOrder) => {
     id: index,
     name: layerObj.name,
     elements: getElements(`${layersDir}/${layerObj.name}/`),
+    blendMode:
+      layerObj["blend"] != undefined ? layerObj["blend"] : "source-over",
+    opacity: layerObj["opacity"] != undefined ? layerObj["opacity"] : 1,
   }));
   return layers;
 };
 
 const saveImage = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/${nftName}-${_editionCount}.png`,
+    `${buildDir}/images/${nftName}-${_editionCount}.png`,
     canvas.toBuffer("image/png")
   );
 };
@@ -100,10 +114,10 @@ const addMetadata = (_dna, _edition) => {
     dna: sha1(_dna.join("")),
     name: `${nftName} #${_edition}`,
     description: description,
-    campaign: "10290 NFTs to crawling the decentralized network. 1470 NFTs to build The King's Office. 210 NFTs to make Sanctuary of The King's World. 30 NFTs to developing and setting The King's Story. In this Universe #3 where The King rules his World. One King that rules them all. One King creates them. One King that mint them all. And in the decentralized world, The King will be live afterlife forever.",
     image: `${baseUri}/${nftName}-${_edition}.png`,
     edition: _edition,
     date: dateTime,
+    ...extraMetadata,
     attributes: attributesList,
     compiler: "Pabrik Roti Indonesia",
   };
@@ -126,9 +140,11 @@ const loadLayerImg = async (_layer) => {
   });
 };
 
-const drawElement = (_element) => {
-  ctx.drawImage(_element.loadedImage, 0, 0, format.width, format.height);
-  addAttributes(_element);
+const drawElement = (_renderObject) => {
+  ctx.globalAlpha = _renderObject.layer.opacity;
+  ctx.globalCompositeOperation = _renderObject.layer.blendMode;
+  ctx.drawImage(_renderObject.loadedImage, 0, 0, format.width, format.height);
+  addAttributes(_renderObject);
 };
 
 const constructLayerToDna = (_dna = [], _layers = []) => {
@@ -138,6 +154,8 @@ const constructLayerToDna = (_dna = [], _layers = []) => {
     );
     return {
       name: layer.name,
+      blendMode: layer.blendMode,
+      opacity: layer.opacity,
       selectedElement: selectedElement,
     };
   });
@@ -177,20 +195,54 @@ const createDna = (_layers) => {
 };
 
 const writeMetaData = (_data) => {
-  fs.writeFileSync(`${buildDir}/_metadata.json`, _data);
+  fs.writeFileSync(`${buildDir}/json/_metadata.json`, _data);
 };
 
 const saveMetaDataSingleFile = (_editionCount) => {
+  let metadata = metadataList.find((meta) => meta.edition == _editionCount);
+  debugLogs
+    ? console.log(
+        `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
+      )
+    : null;
   fs.writeFileSync(
-    `${buildDir}/${nftName}-${_editionCount}.json`,
-    JSON.stringify(metadataList.find((meta) => meta.edition == _editionCount))
+    `${buildDir}/json/${nftName}-${_editionCount}.json`,
+    JSON.stringify(metadata, null, 2)
   );
 };
+
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+  return array;
+}
 
 const startCreating = async () => {
   let layerConfigIndex = 0;
   let editionCount = 1;
   let failedCount = 0;
+  let abstractedIndexes = [];
+  for (
+    let i = 1;
+    i <= layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
+    i++
+  ) {
+    abstractedIndexes.push(i);
+  }
+  if (shuffleLayerConfigurations) {
+    abstractedIndexes = shuffle(abstractedIndexes);
+  }
+  debugLogs
+    ? console.log("Editions left to create: ", abstractedIndexes)
+    : null;
   while (layerConfigIndex < layerConfigurations.length) {
     const layers = layersSetup(
       layerConfigurations[layerConfigIndex].layersOrder
@@ -207,27 +259,32 @@ const startCreating = async () => {
           loadedElements.push(loadLayerImg(layer));
         });
 
-        await Promise.all(loadedElements).then((elementArray) => {
+        await Promise.all(loadedElements).then((renderObjectArray) => {
+          debugLogs ? console.log("Clearing casvas") : null;
           ctx.clearRect(0, 0, format.width, format.height);
           if (background.generate) {
             drawBackground();
           }
-          elementArray.forEach((element) => {
-            drawElement(element);
+          renderObjectArray.forEach((renderObject) => {
+            drawElement(renderObject);
           });
-          saveImage(editionCount);
-          addMetadata(newDna, editionCount);
-          saveMetaDataSingleFile(editionCount);
+          debugLogs
+            ? console.log("Editions left to create: ", abstractedIndexes)
+            : null;
+          saveImage(abstractedIndexes[0]);
+          addMetadata(newDna, abstractedIndexes[0]);
+          saveMetaDataSingleFile(abstractedIndexes[0]);
           console.log(
-            `Created edition: ${editionCount}, with DNA: ${sha1(
+            `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
               newDna.join("")
             )}`
           );
         });
         dnaList.push(newDna);
         editionCount++;
+        abstractedIndexes.shift();
       } else {
-        console.log("DNA exists!");
+        console.log("DNA exists! Wes onok rek!!!");
         failedCount++;
         if (failedCount >= uniqueDnaTorrance) {
           console.log(
@@ -239,7 +296,7 @@ const startCreating = async () => {
     }
     layerConfigIndex++;
   }
-  writeMetaData(JSON.stringify(metadataList));
+  writeMetaData(JSON.stringify(metadataList, null, 2));
 };
 
-module.exports = { startCreating, buildSetup };
+module.exports = { startCreating, buildSetup, getElements };
