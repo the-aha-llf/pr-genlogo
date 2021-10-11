@@ -4,8 +4,8 @@ const baseUri = "https://straight-line.org/thekingscreations/b2/c1";
 
 const layerConfigurations = [
   {
-    // growEditionSizeTo: 1715,
-    growEditionSizeTo: 5,
+    growEditionSizeTo: 1715,
+    // growEditionSizeTo: 5,
     layersOrder: [
       { name: "Backgrounds" },
       // { name: "Mixed Flats" },
@@ -18,8 +18,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 3430,
-    growEditionSizeTo: 10,
+    growEditionSizeTo: 3430,
+    // growEditionSizeTo: 10,
     layersOrder: [
       { name: "Backgrounds" },
       // { name: "Mixed Flats" },
@@ -32,8 +32,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 5145,
-    growEditionSizeTo: 15,
+    growEditionSizeTo: 5145,
+    // growEditionSizeTo: 15,
     layersOrder: [
       { name: "Backgrounds" },
       // { name: "Mixed Flats" },
@@ -46,8 +46,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 6860,
-    growEditionSizeTo: 20,
+    growEditionSizeTo: 6860,
+    // growEditionSizeTo: 20,
     layersOrder: [
       { name: "Backgrounds" },
       // { name: "Mixed Flats" },
@@ -60,8 +60,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 8575,
-    growEditionSizeTo: 25,
+    growEditionSizeTo: 8575,
+    // growEditionSizeTo: 25,
     layersOrder: [
       { name: "Backgrounds" },
       // { name: "Mixed Flats" },
@@ -74,8 +74,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 10290,
-    growEditionSizeTo: 30,
+    growEditionSizeTo: 10290,
+    // growEditionSizeTo: 30,
     layersOrder: [
       { name: "Backgrounds" },
       // { name: "Mixed Flats" },
@@ -88,8 +88,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 10535,
-    growEditionSizeTo: 35,
+    growEditionSizeTo: 10535,
+    // growEditionSizeTo: 35,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Flats" },
@@ -102,8 +102,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 10780,
-    growEditionSizeTo: 40,
+    growEditionSizeTo: 10780,
+    // growEditionSizeTo: 40,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Flats" },
@@ -116,8 +116,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11025,
-    growEditionSizeTo: 45,
+    growEditionSizeTo: 11025,
+    // growEditionSizeTo: 45,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Rounds" },
@@ -130,8 +130,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11270,
-    growEditionSizeTo: 50,
+    growEditionSizeTo: 11270,
+    // growEditionSizeTo: 50,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Rounds" },
@@ -144,8 +144,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11515,
-    growEditionSizeTo: 55,
+    growEditionSizeTo: 11515,
+    // growEditionSizeTo: 55,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Slashes" },
@@ -158,8 +158,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11760,
-    growEditionSizeTo: 60,
+    growEditionSizeTo: 11760,
+    // growEditionSizeTo: 60,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Slashes" },
@@ -172,8 +172,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11795,
-    growEditionSizeTo: 65,
+    growEditionSizeTo: 11795,
+    // growEditionSizeTo: 65,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Flats" },
@@ -186,8 +186,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11830,
-    growEditionSizeTo: 70,
+    growEditionSizeTo: 11830,
+    // growEditionSizeTo: 70,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Flats" },
@@ -200,8 +200,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11865,
-    growEditionSizeTo: 75,
+    growEditionSizeTo: 11865,
+    // growEditionSizeTo: 75,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Rounds" },
@@ -214,8 +214,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11900,
-    growEditionSizeTo: 80,
+    growEditionSizeTo: 11900,
+    // growEditionSizeTo: 80,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Rounds" },
@@ -228,8 +228,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11935,
-    growEditionSizeTo: 85,
+    growEditionSizeTo: 11935,
+    // growEditionSizeTo: 85,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Slashes" },
@@ -242,8 +242,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11970,
-    growEditionSizeTo: 90,
+    growEditionSizeTo: 11970,
+    // growEditionSizeTo: 90,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Slashes" },
@@ -256,8 +256,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11975,
-    growEditionSizeTo: 95,
+    growEditionSizeTo: 11975,
+    // growEditionSizeTo: 95,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Flats" },
@@ -270,8 +270,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11980,
-    growEditionSizeTo: 100,
+    growEditionSizeTo: 11980,
+    // growEditionSizeTo: 100,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Flats" },
@@ -284,8 +284,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11985,
-    growEditionSizeTo: 105,
+    growEditionSizeTo: 11985,
+    // growEditionSizeTo: 105,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Rounds" },
@@ -298,8 +298,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11990,
-    growEditionSizeTo: 110,
+    growEditionSizeTo: 11990,
+    // growEditionSizeTo: 110,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Rounds" },
@@ -312,8 +312,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 11995,
-    growEditionSizeTo: 115,
+    growEditionSizeTo: 11995,
+    // growEditionSizeTo: 115,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Slashes" },
@@ -326,8 +326,8 @@ const layerConfigurations = [
     ],
   },
   {
-    // growEditionSizeTo: 12000,
-    growEditionSizeTo: 120,
+    growEditionSizeTo: 12000,
+    // growEditionSizeTo: 120,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Mixed Slashes" },
