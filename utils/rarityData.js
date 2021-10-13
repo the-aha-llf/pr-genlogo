@@ -10,6 +10,7 @@ console.log(path.join(basePath, "/src/config.js"));
 const { layerConfigurations } = require(path.join(basePath, "/src/config.js"));
 
 const { getElements } = require("../src/main.js");
+const raritydataFilePath = `${basePath}/build/json/_raritydata.json`;
 
 // read json data
 let rawdata = fs.readFileSync(`${basePath}/build/json/_metadata.json`);
@@ -83,3 +84,5 @@ for (var layer in rarityData) {
   }
   console.log();
 }
+
+

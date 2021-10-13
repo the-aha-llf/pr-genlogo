@@ -6,12 +6,12 @@ const basePath = isLocal ? process.cwd() : path.dirname(process.execPath);
 const { MODE } = require(path.join(basePath, "src/blendMode.js"));
 const description =
   "The King's Creations! An NFT Project by ALL HAIL THE KING. B2/C1 - Second Batch/First Collection.";
-const baseUri = "https://straight-line.org/thekingscreations/b2/c1";
+const baseUri = "ipfs://";
 
 const layerConfigurations = [
   {
-    // growEditionSizeTo: 12000,
-    growEditionSizeTo: 120,
+    growEditionSizeTo: 12000,
+    // growEditionSizeTo: 48,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Bottom" },
@@ -22,7 +22,7 @@ const layerConfigurations = [
   },
 ];
 
-const shuffleLayerConfigurations = false;
+const shuffleLayerConfigurations = true;
 
 const debugLogs = false;
 
@@ -45,8 +45,8 @@ const rarityDelimiter = "#";
 const uniqueDnaTorrance = 138240;
 
 const preview = {
-  thumbPerRow: 5,
-  thumbWidth: 50,
+  thumbPerRow: 8,
+  thumbWidth: 247,
   imageRatio: format.width / format.height,
   imageName: "preview.png",
 };

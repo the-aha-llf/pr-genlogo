@@ -34,7 +34,7 @@ var dnaList = [];
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {
-    fs.rmdirSync(buildDir, { recursive: true });
+    fs.rmSync(buildDir, { recursive: true });
   }
   fs.mkdirSync(buildDir);
   fs.mkdirSync(path.join(buildDir, "/json"));
@@ -119,7 +119,7 @@ const addMetadata = (_dna, _edition) => {
     date: dateTime,
     ...extraMetadata,
     attributes: attributesList,
-    compiler: "Pabrik Roti Indonesia",
+    compiler: "AHA. LLF",
   };
   metadataList.push(tempMetadata);
   attributesList = [];
@@ -184,7 +184,7 @@ const createDna = (_layers) => {
       random -= layer.elements[i].weight;
       // console.log("=======Hasilnya=============> ", random);
       if (random < 0) {
-        console.log("=======Variant Terpilih=====> ", layer.elements[i].id);
+        // console.log("=======Variant Terpilih=====> ", layer.elements[i].id);
         return randNum.push(
           `${layer.elements[i].id}:${layer.elements[i].filename}`
         );
@@ -206,7 +206,7 @@ const saveMetaDataSingleFile = (_editionCount) => {
       )
     : null;
   fs.writeFileSync(
-    `${buildDir}/json/${nftName}-${_editionCount}.json`,
+    `${buildDir}/json/${_editionCount}.json`,
     JSON.stringify(metadata, null, 2)
   );
 };

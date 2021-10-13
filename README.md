@@ -1,9 +1,10 @@
-# Logo Breads
-The second programmed bread by Pabrik Roti Indonesia.
+# The King's Creations by ALL HAIL THE KING
+#selitekk... An NFT project by ALL HAIL THE KING.
 
-Read more here: https://github.com/Pabrik-Roti/01-Logo-Breads/wiki
+This is the second batch era... ahahahahah!!!
 
-These repos contain all the code used for creating generative logos art by using the canvas api and node js. Before you use these engine, make sure you eat enough nutritious food, especially [Programmed Breads]().
+Read more here: 
 
-Salam, Kondom Berduri! © 2021 by Pabrik Roti Indonesia
+These repos contain all the code used for creating generative artwork. Before you use these engine, make sure you already meet with ALL HAIL THE KING. Okay!!!
 
+AMK for AHA - AHA. LLF.
